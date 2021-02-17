@@ -1,0 +1,299 @@
+a {
+	color: #323232;
+}
+
+a:hover {
+	color: #0A9696;
+}
+
+/* Control modal padding */
+
+#modalbody {
+	padding: 50px;
+}
+
+@media (max-width:768px) {
+	#modalbody {
+		padding: 20px;
+	}
+}
+
+@media (max-width:480px) {
+	#modalbody {
+		padding: 10px;
+	}
+}
+
+/* Control modal padding */
+
+/* Control profile image */
+
+.profileImage {
+	width: 150px;
+}
+
+/* //////////////////////////////////////////////////////////*/
+
+/* //////////////// Control หน้าแสดงรายการตามหมวดหมู่*/
+
+/* //////////////////////////////////////////////////////////*/
+
+.sizeImage {
+	width: 80px;
+	border-radius: 45px;
+}
+
+.userPostFont {
+	font-size: 12px;
+}
+
+.mce-container {
+	max-width: 100% !important;
+}
+
+.kb-title {
+	position: relative;
+}
+
+.kb-title>span {
+	position: absolute;
+	left: 10px;
+	bottom: 10px;
+	font-size: 12px;
+}
+
+.smallfdcolor {
+	font-size: 16px;
+	color: #C9A318;
+}
+
+#dataListByCatTable td:nth-child(2) {
+	position: relative;
+}
+
+#dataListByCatTable td:nth-child(2)>span {
+	position: absolute;
+	left: 10px;
+	bottom: 10px;
+	font-size: 12px;
+}
+
+#dataListByCatTable_read td:nth-child(2) {
+	position: relative;
+}
+
+#dataListByCatTable_read td:nth-child(2)>span {
+	position: absolute;
+	left: 10px;
+	bottom: 10px;
+	font-size: 12px;
+}
+
+/* //////////////////////////////////////////////////////////*/
+
+/* //////////////// Control หน้าแสดงรายการตามหมวดหมู่*/
+
+/* //////////////////////////////////////////////////////////*/
+
+
+
+
+
+
+
+
+/* //////////////////////////////////////////////////////////*/
+
+/* //////////////// Control Folder Size*/
+
+/* //////////////////////////////////////////////////////////*/
+
+.foldersize {
+	font-size: 70px;
+	color: #C9A318;
+	position: relative;
+}
+
+.foldersize>span {
+	position: absolute;
+	font-size: 13px;
+	color: #000;
+	right: 16px;
+	top: 45px;
+}
+
+@media screen and (max-width:768px) {
+	.addBtn>a {
+		display: block;
+		height: 50px;
+		font-size: 16px;
+		text-align: center;
+	}
+}
+
+@media screen and (max-width:480) {
+	.addBtn>a {
+		display: block;
+		height: 50px;
+		font-size: 16px;
+		text-align: center;
+	}
+}
+
+/* //////////////////////////////////////////////////////////*/
+
+/* //////////////// Control Folder Size*/
+
+/* //////////////////////////////////////////////////////////*/
+
+/* //////////////////////////////////////////////////////////*/
+
+/* //////////////// Control Icon File size*/
+
+/* //////////////////////////////////////////////////////////*/
+
+.iconfilesize {
+	font-size: 70px;
+	color: #B90000;
+}
+
+/* //////////////////////////////////////////////////////////*/
+
+/* //////////////// Control Icon File size*/
+
+/* //////////////////////////////////////////////////////////*/
+
+/* //////////////////////////////////////////////////////////*/
+
+/* //////////////// Control TOP MENU
+/* //////////////////////////////////////////////////////////*/
+
+.txtLogout {
+	font-size: 12px !important;
+	color: #b90000 !important;
+}
+
+/* For รายการรอตรวจสอบ User profile */
+
+.txtWaitApp {
+	font-size: 12px !important;
+	color: #FF8200;
+}
+
+.countTxt {
+	font-size: 12px !important;
+	color: #FF8200;
+}
+
+/* For รายการรอตรวจสอบ User profile */
+
+/* For รายการ Post ทั้งหมด */
+
+.txtDataTotal {
+	font-size: 12px !important;
+	color: #0078FF;
+}
+
+.countTxtDataAll {
+	font-size: 12px !important;
+	color: #0078FF;
+}
+
+/* For รายการ Post ทั้งหมด */
+
+/* For รายการ Post ที่เผยแพร่ */
+
+.txtDataPub {
+	font-size: 12px !important;
+	color: #0A6E0A;
+}
+
+.countTxtPub {
+	font-size: 12px !important;
+	color: #0A6E0A;
+}
+
+/* For รายการ Post ที่เผยแพร่ */
+
+/* For รายการ Post ที่เผยแพร่ */
+
+.txtDataCan {
+	font-size: 12px !important;
+	color: #b90000;
+}
+
+.countTxtCan {
+	font-size: 12px !important;
+	color: #b90000;
+}
+
+/* For รายการ Post ที่เผยแพร่ */
+
+/* control icon logout */
+
+.iconLogout {
+	font-size: 20px;
+	color: #B90000;
+}
+
+.subMenuArea {
+	width: 240px !important;
+}
+
+/* //////////////////////////////////////////////////////////*/
+
+/* //////////////// Control TOP MENU
+/* //////////////////////////////////////////////////////////*/
+
+/* //////////////////////////////////////////////////////////*/
+
+/* //////////////// Control Indexpage
+/* //////////////////////////////////////////////////////////*/
+
+.deptBox {
+
+	box-sizing: border-box;
+	/* height: 150px; */
+	/* position: relative; */
+	box-shadow: 2px 2px 5px #888888;
+	transition: transform .3s; /* Animation */
+	/* border-radius: 15px; */
+	/* background-color: rgb(216, 215, 215) !important; */
+	border:0px;
+}
+.deptBox:hover{
+	transform: scale(1.1);
+}
+
+.textdept {
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	font-size:18px;
+	text-align:center;
+	font-weight: 600;
+}
+
+.folderDept{
+	font-size:20px !important;
+	color:#f1cb3e;
+}
+.deptbgimage{
+	opacity: 0.3 !important;
+}
+.searchSection{
+	min-height: 190px;
+}
+.searchInput{
+	height: 50px;
+	border-radius: 15px;
+	border:2px solid #0A6E0A;
+}
+
+/* //////////////////////////////////////////////////////////*/
+
+/* //////////////// Control Indexpage
+/* //////////////////////////////////////////////////////////*/
