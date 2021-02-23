@@ -367,6 +367,12 @@ function loaddatabydept($deptcode)
             $icon = '';
         }
 
+        if(getUser()->ecode != $rs->kb_ecodepost){
+            $viewlink = base_url('viewdata_read.html/') . $rs->kb_no;
+        }else{
+            $viewlink = base_url('viewdata.html/') . $rs->kb_no;
+        }
+
         $strtitle = iconv_substr(getDataByKbcode($rs->kb_no)->kb_title, 0, 120, "UTF-8");
         $resultTitleCut = $strtitle . "...";
 
@@ -382,7 +388,7 @@ function loaddatabydept($deptcode)
                 </td>
                 <td class="kb-title">
                     
-                        <b><a href="' . base_url('viewdata.html/') . $rs->kb_no . '">' . $resultTitleCut . " " . $icon . '</b></a><br>
+                        <b><a href="' .$viewlink. '">' . $resultTitleCut . " " . $icon . '</b></a><br>
                         <span><i class="icon-folder smallfdcolor"></i> : <a href="' . base_url('listdatabycat.html/') . $rs->kb_categorycode . '">' . $rs->kb_category . '</a></span>
              
                 </td>
@@ -502,7 +508,8 @@ function getDataByKbcode($kbcode)
     kb_main.kb_deptcodepost,
     kb_main.kb_emailpost,
     kb_main.kb_datetime,
-    kb_main.kb_hit
+    kb_main.kb_hit,
+    kb_main.kb_status
     FROM
     kb_main
     WHERE kb_no = '$kbcode'
@@ -516,11 +523,30 @@ function getFilesByKbcode($kbcode)
     $sql = gfn()->db->query("SELECT * FROM kb_files WHERE file_kbno = '$kbcode' ORDER BY file_autoid ASC ");
     $output = '';
     foreach ($sql->result() as $rs) {
+        $checkfiletype = substr($rs->file_name , -4);
+        $iconfiles = '';
+        switch($checkfiletype){
+            case ".jpg":
+                $iconfiles = 'icon-file-image';
+                break;
+            case ".pdf":
+                $iconfiles = 'icon-file-pdf';
+                break;
+            case ".jpeg":
+                $iconfiles = 'icon-file-image';
+                break;
+            case ".png":
+                $iconfiles = 'icon-file-image';
+                break;
+            default:
+                $iconfiles = 'icon-file-pdf';
+        }
+
         $output .= '
         
         <div class="col-lg-4 col-4 text-center">
         <a href="' . base_url('upload/') . $rs->file_name . '" target="_blank">
-        <i class="icon-file-pdf iconfilesize"></i><br>
+        <i class="'.$iconfiles.' iconfilesize"></i><br>
         <span><b>' . $rs->file_name . '</b></span>
         </a>
         </div>
@@ -601,13 +627,20 @@ function getDataWait($deptcode)
         $sColor = '';
         $sDis = '';
         $scDis = '';
+        $nApp = '';
 
         if ($rs->kb_status == "เผยแพร่") {
             $sColor = ' style="color:#006400;" ';
             $sDis = ' style="display:none;" ';
+            $nApp = ' style="display:none;" ';
         }else if($rs->kb_status == "ยกเลิกการเผยแพร่"){
             $sColor = ' style="color:#CD0000;" ';
             $scDis = ' style="display:none;" ';
+        }else if($rs->kb_status == "ไม่อนุมัติรายการ"){
+            $sColor = ' style="color:#CD0000;" ';
+            $scDis = ' style="display:none;" ';
+            $nApp = ' style="display:none;" ';
+            $sDis = ' style="display:none;" ';
         } else {
             $scDis = ' style="display:none;" ';
         }
@@ -629,15 +662,20 @@ function getDataWait($deptcode)
              
                 </td>
                 <td class="text-center">
-                <div>สถานะ : <span id="vstatus" ' . $sColor . '><b>' . $rs->kb_status . '</b></span></div><br>
+                    <div>สถานะ : <span id="vstatus" ' . $sColor . '><b>' . $rs->kb_status . '</b></span></div><br>
 
-                <a id="appBtn" ' . $sDis . ' href="javascript:void(0)" class="button button-mini button-circle button-green"
-                    data_kbno = "' . $rs->kb_no . '"
-                ><i class="icon-off"></i>อนุมัติ</a>
+                    <a id="appBtn" ' . $sDis . ' href="javascript:void(0)" class="button button-mini button-circle button-green"
+                        data_kbno = "' . $rs->kb_no . '"
+                    ><i class="icon-off"></i>อนุมัติ</a>
 
-                <a id="appBtnCancel" ' . $scDis . ' href="javascript:void(0)" data-toggle="modal" data-target="#md_resonCancel" class="button button-mini button-circle button-red"
-                    data_kbno = "' . $rs->kb_no . '"
-                ><i class="icon-off"></i>ยกเลิก</a>
+                    <a id="notAppBtn" ' . $nApp . ' href="javascript:void(0)" data-toggle="modal" data-target="#md_resonCancel" class="button button-mini button-circle button-red"
+                        data_kbno = "' . $rs->kb_no . '"
+                        data_action = "notapprove"
+                    ><i class="icon-off"></i>ไม่อนุมัติ</a>
+
+                    <a id="appBtnCancel" ' . $scDis . ' href="javascript:void(0)" data-toggle="modal" data-target="#md_resonCancel" class="button button-mini button-circle button-red"
+                        data_kbno = "' . $rs->kb_no . '"
+                    ><i class="icon-off"></i>ยกเลิก</a>
                 </td>
             </tr>
             ';
@@ -904,6 +942,80 @@ function getDataWaitOwnerCan($ecode)
             $sDis = ' style="display:none;" ';
         } else {
             $scDis = ' style="display:none;" ';
+            $sColor = ' style="color:#CD0000;" ';
+        }
+
+        $output .= '
+            <tr>
+                <td>
+                    <div class="text-center userPostFont">
+                        <img src="' . linkImg(getImageUserPost($rs->kb_ecodepost)) . '" class="img-thumbnail sizeImage rounded"><br>
+                        <span>' . $rs->kb_userpost . '</span>
+                        <span>' . $rs->kb_ecodepost . '</span><br>
+                        <span>' . conDateTimeFromDb($rs->kb_datetime) . '</span>
+                    </div>
+                </td>
+                <td class="kb-title">
+                    
+                        <b><a href="' . base_url('viewdata.html/') . $rs->kb_no . '">' . $resultTitleCut . " " . $icon . '</b></a><br>
+                        <span><i class="icon-folder smallfdcolor"></i> : <a href="' . base_url('listdatabycat.html/') . $rs->kb_categorycode . '">' . $rs->kb_category . '</a></span>
+             
+                </td>
+                <td class="text-center">
+                <div>สถานะ : <span id="vstatus" ' . $sColor . '><b>' . $rs->kb_status . '</b></span></div><br>
+
+                </td>
+            </tr>
+            ';
+    }
+    return $output;
+}
+
+
+
+
+
+
+function getDataWaitOwnerNot($ecode)
+{
+    $sql = gfn()->db->query("SELECT
+    kb_main.kb_no,
+    kb_main.kb_title,
+    kb_main.kb_category,
+    kb_main.kb_categorycode,
+    kb_main.kb_userpost,
+    kb_main.kb_ecodepost,
+    kb_main.kb_deptnamepost,
+    kb_main.kb_deptcodepost,
+    kb_main.kb_emailpost,
+    kb_main.kb_datetime,
+    kb_main.kb_status
+    FROM
+    kb_main
+    WHERE kb_ecodepost = '$ecode' AND kb_status in ('ไม่อนุมัติรายการ')
+    ORDER BY kb_autoid DESC
+    ");
+    $output = '';
+    foreach ($sql->result() as $rs) {
+
+        if (checkFilesByKbcode($rs->kb_no) > 0) {
+            $icon = '<i class="icon-line-paper-clip" style="color:#CD0000;font-weight:600;font-size:16px;"></i>';
+        } else {
+            $icon = '';
+        }
+
+        $strtitle = iconv_substr(getDataByKbcode($rs->kb_no)->kb_title, 0, 120, "UTF-8");
+        $resultTitleCut = $strtitle . "...";
+
+        $sColor = '';
+        $sDis = '';
+        $scDis = '';
+        if ($rs->kb_status == "เผยแพร่") {
+            $sColor = ' style="color:#006400;" ';
+            $sDis = ' style="display:none;" ';
+        } else {
+            $scDis = ' style="display:none;" ';
+            $sColor = ' style="color:#CD0000;" ';
         }
 
         $output .= '
@@ -947,7 +1059,13 @@ function getuserWaitdata($ecode)
 
 function getuserWaitdataTotal($ecode)
 {
-    $sql = gfn()->db->query("SELECT kb_status FROM kb_main WHERE kb_ecodepost = '$ecode' ");
+    $sql = gfn()->db->query("SELECT kb_status FROM kb_main WHERE kb_ecodepost = '$ecode' AND kb_status not in ('ไม่อนุมัติรายการ') ");
+    return $sql->num_rows();
+}
+
+function getuserWaitdataNotApp($ecode)
+{
+    $sql = gfn()->db->query("SELECT kb_status FROM kb_main WHERE kb_ecodepost = '$ecode' AND kb_status in ('ไม่อนุมัติรายการ') ");
     return $sql->num_rows();
 }
 
@@ -1123,7 +1241,7 @@ function countAllCategoryByDept($deptcode)
 // นับจำนวนหัวข้อทั้งหมดของแผนกนั้นๆ
 function countAllTopicByDept($deptcode)
 {
-    $sql = gfn()->db->query("SELECT kb_categorycode FROM kb_main WHERE kb_deptcodepost = '$deptcode' ");
+    $sql = gfn()->db->query("SELECT kb_categorycode FROM kb_main WHERE kb_deptcodepost = '$deptcode' AND kb_status = 'เผยแพร่' ");
     return $sql->num_rows();
 }
 

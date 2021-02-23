@@ -240,6 +240,11 @@
 										</li>
 
 										<li class="top-links-item">
+											<a href="#" data-toggle="modal" data-target="#md_waitpublishOwner" id="notAppOwner"><span class="txtDataCan">รายการที่ไม่อนุมัติ</span> ( <span class="countTxtCan"><?=getuserWaitdataNotApp(getUser()->ecode)?></span> )
+											</a>
+										</li>
+
+										<li class="top-links-item">
 											<a href="#" data-toggle="modal" data-target="#md_waitpublishOwner" id="totalOwner">
 												<span class="txtDataTotal">รายการโพสต์ทั้งหมด</span> ( <span class="countTxtDataAll"><?=getuserWaitdataTotal(getUser()->ecode)?></span> )
 											</a>

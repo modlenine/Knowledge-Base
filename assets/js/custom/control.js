@@ -57,6 +57,10 @@ $(document).ready(function () {
         loaddataWaitOwnerCan();
     });
 
+    $('#notAppOwner').click(function () {
+        loaddataWaitOwnerNot();
+    });
+
     $('#totalOwner').click(function () {
         loaddataWaitOwnerTotal();
     });
@@ -126,10 +130,30 @@ $(document).ready(function () {
             $('#check_kbno').val(data_kbno2);
         });
 
+        $(document).on('click', '#notAppBtn', function () {
+            let data_kbno2 = $(this).attr("data_kbno");
+            let data_action = $(this).attr("data_action");
+            $('#check_kbno').val(data_kbno2);
+            $('#checkaction').val(data_action);
+        });
+
         $(document).on('click', '#btnCancelPub', function () {
             let kbnocan = $('#check_kbno').val();
             let resoncan = $('#resonOfCalcel').val();
-            cancelData(kbnocan,resoncan);
+            let checkaction = $('#checkaction').val();
+
+            if(resoncan == ''){
+                alert('กรุณาระบบเหตุผลในการยกเลิกการเผยแพร่ด้วยค่ะ');
+                $('#resondiv').css('border' , 'solid 1px red');
+                return false;
+            }else{
+                if(checkaction == "notapprove"){
+                    notApproveData(kbnocan,resoncan)
+                }else{
+                    cancelData(kbnocan,resoncan);
+                }
+                
+            }
         });
 
 

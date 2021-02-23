@@ -426,6 +426,28 @@ class Main_model extends CI_Model
     }
 
 
+    public function notApproveData()
+    {
+
+        $data_kbno = '';
+        $data_resoncan = '';
+
+        $data_kbno = $this->input->post("kbnocan");
+        $data_resoncan = $this->input->post("resoncan");
+
+        $arUpdateStatus = array(
+            "kb_status" => "ไม่อนุมัติรายการ",
+            "kb_datetimeapp" => date("Y-m-d H:i:s"),
+            "kb_userapp" => getUser()->Fname . " " . getUser()->Lname,
+            "kb_ecodeapp" => getUser()->ecode,
+            "kb_deptcodeapp" => getUser()->DeptCode,
+            "kb_cancel_memo" => $data_resoncan
+        );
+        $this->db->where("kb_no", $data_kbno);
+        $this->db->update("kb_main", $arUpdateStatus);
+    }
+
+
     /////////////////////////////////////////////////////////////////////////
     //////////// Data Zone
     ////////////////////////////////////////////////////////////////////////

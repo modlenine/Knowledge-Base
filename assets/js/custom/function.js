@@ -67,6 +67,8 @@ function editCategory(data_id,data_catname,data_catmemo) {
                 $('#cat_name').val('');
                 $('#cat_memo').val('');
                 $('#cat_autoid').val('');
+                $('#btn_addCategory').text('เพิ่มหมวดหมู่');
+                $('#btn_addCategory').removeClass("button-amber").addClass("button-dirtygreen");
                 loadCategory();
                 $('#tb_category').dataTable();
         }
@@ -391,6 +393,37 @@ function loaddataWaitOwnerCan()
 }
 
 
+function loaddataWaitOwnerNot()
+{
+    $.ajax({
+        url:"/intsys/kb/main/loaddataWaitOwnerNot",
+        method:"POST",
+        data:{
+
+        },
+        beforeSend:function(){
+
+        },
+        success:function(res){
+            $('#loadWaitOwner').html(res);
+
+
+            $('#tb_datalistWaitOwner').dataTable({
+                columnDefs: [
+				{ "width": "15%", "targets": 0 },
+				{ "width": "15%", "targets": 2 },
+			],
+                "ordering": false,
+                pageLength : 10,
+                lengthMenu: [[5, 10, 20,50,100,300,500 -1], [5, 10, 20,50,100,300,500 ,'Todos']]
+            });
+			    
+            
+        }
+    });
+}
+
+
 
 
 
@@ -425,6 +458,31 @@ function cancelData(kbnocan,resoncan)
 {
     $.ajax({
         url:"/intsys/kb/main/cancelData",
+        method:"POST",
+        data:{
+            kbnocan: kbnocan,
+            resoncan: resoncan
+        },
+        beforeSend:function(){
+
+        },
+        success:function(res){
+            console.log(res);
+                $('#alertApp').fadeIn(200);
+                $('#alertApp').html('<div class="alert alert-success" role="alert">รายการดังกล่าวถูกยกเลิก เรียบร้อยแล้ว</div>');
+                $('#alertApp').fadeOut(5000);
+                loaddataWait();
+                location.reload();
+            
+        }
+    });
+}
+
+
+function notApproveData(kbnocan,resoncan)
+{
+    $.ajax({
+        url:"/intsys/kb/main/notApproveData",
         method:"POST",
         data:{
             kbnocan: kbnocan,

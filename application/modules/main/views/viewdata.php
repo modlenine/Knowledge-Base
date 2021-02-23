@@ -46,7 +46,7 @@
 				<div class="col-lg-2"></div>
 				<div class="col-lg-8">
 					<div class="row">
-						<div class="col-lg-12 addBtn">
+						<div class="col-lg-6 addBtn">
 							<a href="javascript:history.back(-1)" class="button button-circle button-3d button-second"><i class="icon-line-reply"></i>ย้อนกลับ</a>
 							<a id="editdata" href="#" class="button button-circle button-3d button-amber" data-toggle="modal" data-target="#md_edit"
 							data_kb_no = "{kbcode}"
@@ -67,6 +67,22 @@
 							<!-- Load menu bar -->
 							
 							<!-- Load menu bar -->
+						</div>
+						<?php  
+						// Check status color
+						$statusColor = '';
+						if($kb_status == "เผยแพร่"){
+							$statusColor = ' color:#006400; ';
+						}else if($kb_status == "ไม่อนุมัติรายการ"){
+							$statusColor = ' color:#b90000; ';
+						}else if($kb_status == "ยกเลิกการเผยแพร่"){
+							$statusColor = ' color:#b90000; ';
+						}
+						
+						
+						?>
+						<div class="col-lg-6 statusdiv">
+							<span style="font-size:22px;">สถานะ : </span><span style="font-size:22px;<?=$statusColor?>">{kb_status}</span>
 						</div>
 					</div>
 					<hr>

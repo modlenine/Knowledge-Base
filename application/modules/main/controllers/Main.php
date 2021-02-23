@@ -56,6 +56,13 @@ class Main extends MX_Controller
     ////////////////////////////////////////////////////////////////////////
     public function viewdata($kbcode)
     {
+        if(getUser()->ecode != getDataByKbcode($kbcode)->kb_ecodepost){
+            echo "<script>";
+            echo "alert('คุณไม่สามารถเข้าใช้งานหน้านี้ได้ กรุณาติดต่อ IT')";
+            echo "</script>";
+            header("refresh:0; url=".base_url());
+            exit;
+        }
         countHit($kbcode);
         $data = array(
             "title" => "หน้า View ข้อมูล",
@@ -74,7 +81,8 @@ class Main extends MX_Controller
             "kb_deptnamepost" => getDataByKbcode($kbcode)->kb_deptnamepost,
             "kb_deptcodepost" => getDataByKbcode($kbcode)->kb_deptcodepost,
             "kb_emailpost" => getDataByKbcode($kbcode)->kb_emailpost,
-            "kb_datetime" => getDataByKbcode($kbcode)->kb_datetime
+            "kb_datetime" => getDataByKbcode($kbcode)->kb_datetime,
+            "kb_status" => getDataByKbcode($kbcode)->kb_status,
         );
         getHead();
         getContent("viewdata", $data);
@@ -227,6 +235,12 @@ class Main extends MX_Controller
         $this->load->view("resultDatalistWaitOwner", $data);
     }
 
+    public function loaddataWaitOwnerNot()
+    {
+        $data['resultDatawaitOwner'] = getDataWaitOwnerNot(getUser()->ecode);
+        $this->load->view("resultDatalistWaitOwner", $data);
+    }
+
 
 
 
@@ -241,6 +255,11 @@ class Main extends MX_Controller
     public function cancelData()
     {
         $this->main->cancelData();
+    }
+
+    public function notApproveData()
+    {
+        $this->main->notApproveData();
     }
     ///////////// Control approve data list
     /////////////////////////////////////////////////////////////////////////
@@ -393,7 +412,6 @@ class Main extends MX_Controller
 
     public function test()
     {
-        $user_perg = getUserPerGroup(getUser()->ecode);
-        getPermissionRule($user_perg);
+        echo substr("image.jpg" , -4);
     }
 }/* End of file Main.php */

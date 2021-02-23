@@ -181,7 +181,7 @@
                             <div class="col-lg-12 bottommargin">
                                 <label>เอกสารประกอบ:</label><br>
                                 <label for="">เอกสารเดิม</label>
-                                <div id="showOldFile"></div><br>
+                                <div id="showOldFile" class="row"></div><br>
                                 <label for="">เอกสารอัพเดตใหม่</label>
                                 <input id="kb_files" name="kb_files[]" type="file" class="file" multiple data-show-upload="false" data-show-caption="true" data-show-preview="true">
                             </div>
@@ -190,7 +190,7 @@
                                 <input type="text" id="freelance-quote-botcheck" name="freelance-quote-botcheck" value="" />
                             </div>
                             <div class="col-12">
-                                <input type="text" name="kbcodeE" id="kbcodeE">
+                                <input hidden type="text" name="kbcodeE" id="kbcodeE">
                                 <!-- <button type="submit" name="kb_submit" id="kb_submit" class="btn btn-primary">บันทึกข้อมูล</button> -->
                                 <input type="submit" name="kb_submit" id="kb_submit" class="btn btn-success" value="บันทึกข้อมูล">
                             </div>
@@ -453,9 +453,10 @@
             <div id="alertApp"></div>
 
                 <input type="text" name="check_kbno" id="check_kbno">
+                <input type="text" name="checkaction" id="checkaction">
 
                 <div class="row">
-                    <div class="col-lg-12 form-group">
+                    <div class="col-lg-12 form-group" id="resondiv">
                         <textarea name="resonOfCalcel" id="resonOfCalcel" cols="30" rows="10" class="form-control"></textarea>
                     </div>
                 </div>
