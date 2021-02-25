@@ -703,7 +703,7 @@ function getDataWaitOwner($ecode)
     kb_main.kb_status
     FROM
     kb_main
-    WHERE kb_ecodepost = '$ecode' AND kb_status not in ('เผยแพร่' , 'ยกเลิกการเผยแพร่')
+    WHERE kb_ecodepost = '$ecode' AND kb_status not in ('เผยแพร่' , 'ยกเลิกการเผยแพร่' , 'ไม่อนุมัติรายการ')
     ORDER BY kb_autoid DESC
     ");
     $output = '';

@@ -111,7 +111,8 @@ class Main extends MX_Controller
             "kb_deptnamepost" => getDataByKbcode($kbcode)->kb_deptnamepost,
             "kb_deptcodepost" => getDataByKbcode($kbcode)->kb_deptcodepost,
             "kb_emailpost" => getDataByKbcode($kbcode)->kb_emailpost,
-            "kb_datetime" => getDataByKbcode($kbcode)->kb_datetime
+            "kb_datetime" => getDataByKbcode($kbcode)->kb_datetime,
+            "kb_status" => getDataByKbcode($kbcode)->kb_status,
         );
         getHead();
         getContent("viewdata_read", $data);
