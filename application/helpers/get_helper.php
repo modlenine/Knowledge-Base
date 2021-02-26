@@ -1129,44 +1129,125 @@ function checkDupricateComment($ecodeC, $kbnoC)
     }
 }
 
+function checkDupRat($ecodeR , $kbnoR)
+{
+    $sql = gfn()->db->query("SELECT rt_kbno , rt_ecodepost FROM kb_rating WHERE rt_kbno = '$kbnoR' AND rt_ecodepost = '$ecodeR' ");
+    $countRat = $sql->num_rows();
+    if ($countRat > 0) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
 function loadCommentfn($kbcode)
 {
     $sql = gfn()->db->query("SELECT 
-    rt_comment , 
-    rt_star , 
-    rt_kbno , 
-    rt_userpost , 
-    rt_ecodepost , 
-    rt_datetime 
-    FROM kb_rating 
-    WHERE rt_kbno = '$kbcode' 
-    ORDER BY rt_autoid DESC ");
+    cm_text ,
+    cm_autoid, 
+    cm_kbno , 
+    cm_user , 
+    cm_ecode , 
+    cm_datetime 
+    FROM kb_comment 
+    WHERE cm_kbno = '$kbcode' AND cm_cmid IS NULL
+    ORDER BY cm_autoid DESC ");
 
     $output = '';
 
     foreach ($sql->result() as $rs) {
+        $sql2 = gfn()->db->query("SELECT cm_reply , cm_kbno , cm_user , cm_ecode , cm_datetime FROM kb_comment WHERE cm_cmid='$rs->cm_autoid' AND cm_kbno='$rs->cm_kbno' ");
+        $output2 = '';
+        foreach($sql2->result() as $rss){
+            $output2 .= '
+            <div class="card">
+        <div class="card-body p-3" style="background-color:#C0FFFF;">
+            <div class="row">
+                <div class="col-md-8">
+                    ' . $rss->cm_reply . '
+                </div>
+                <div class="col-lg-4 text-center">
+                    <img src="' . linkImg(getImageUserPost($rss->cm_ecode)) . '" class="img-thumbnail sizeImageReply"><br>
+                    ' . $rss->cm_user . '<br>' . conDatetimeFromDb($rss->cm_datetime) . '
+                    <br>
+                </div>
+            </div>
+        </div>
+        </div><br>
+            ';
+        }
         $output .= '
             <div class="card">
                     <div class="card-body p-3" style="background-color:#FFFFCC;">
                         <div class="row">
                             <div class="col-md-8">
-                                ' . $rs->rt_comment . '
+                                ' . $rs->cm_text . '
                             </div>
                             <div class="col-lg-4 text-center">
-                            <img src="' . linkImg(getImageUserPost($rs->rt_ecodepost)) . '" class="img-thumbnail sizeImage"><br>
-                            ' . $rs->rt_userpost . '<br>' . conDatetimeFromDb($rs->rt_datetime) . '
-                            <input id="rt_star" name="rt_star" type="number" class="rating" min="0" max="5" data-step="1" data-stars="5" data-size="xs" data-readonly="true" value="' . $rs->rt_star . '">
+                                <img src="' . linkImg(getImageUserPost($rs->cm_ecode)) . '" class="img-thumbnail sizeImage"><br>
+                                ' . $rs->cm_user . '<br>' . conDatetimeFromDb($rs->cm_datetime) . '
+                                <input id="rt_star" name="rt_star" type="number" class="rating" min="0" max="5" data-step="1" data-stars="5" data-size="xs" data-readonly="true" value="'.getStar($kbcode , $rs->cm_ecode ,$rs->cm_datetime).'"><br>
+
+                                <a href="#" id="btn_reply" data-toggle="modal" data-target="#md_reply"
+                                data_rpuserpost = "'.$rs->cm_user.'"
+                                data_rpid = "'.$rs->cm_autoid.'"
+                                data_rpkbno = "'.$rs->cm_kbno.'"
+                                ><button  name="btn_reply" class="button button-mini button-circle button-3d button-second">ตอบกลับ</button></a>
                             </div>
                         </div>
+                        '.$output2.'
+                        ';
+     
 
-                        
-
-
+          $output .= '            
                     </div>
-                </div><br>
+                </div>
+                <br>
         ';
     }
     echo $output;
+}
+
+
+
+function loadReply($commentid , $kbno)
+{
+    $sql = gfn()->db->query("SELECT cm_reply , cm_kbno , cm_user , cm_ecode , cm_datetime FROM kb_comment WHERE cm_cmid='$commentid' AND cm_kbno='$kbno' ");
+    $output2 = '';
+    foreach($sql->result() as $rs){
+        $output2 .= '
+        <div class="card">
+        <div class="card-body p-3" style="background-color:#5ABEF5;">
+            <div class="row">
+                <div class="col-md-8">
+                    ' . $rs->cm_reply . '
+                </div>
+                <div class="col-lg-4 text-center">
+                    <img src="' . linkImg(getImageUserPost($rs->cm_ecode)) . '" class="img-thumbnail sizeImage"><br>
+                    ' . $rs->cm_user . '<br>' . conDatetimeFromDb($rs->cm_datetime) . '
+                    <br>
+                </div>
+            </div>
+        </div>
+        </div>
+        ';
+    }
+    echo $output2;
+}
+
+
+
+
+
+function getStar($kbno , $ecode ,$datetime)
+{
+    $sql = gfn()->db->query("SELECT rt_star FROM kb_rating WHERE rt_kbno = '$kbno' AND rt_ecodepost= '$ecode' AND rt_datetime = '$datetime' ");
+    
+    if($sql->num_rows() > 0){
+        return $sql->row()->rt_star;
+    }else{
+        return 0;
+    }
 }
 
 

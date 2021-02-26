@@ -142,17 +142,17 @@ $(document).ready(function () {
             let resoncan = $('#resonOfCalcel').val();
             let checkaction = $('#checkaction').val();
 
-            if(resoncan == ''){
+            if (resoncan == '') {
                 alert('กรุณาระบบเหตุผลในการยกเลิกการเผยแพร่ด้วยค่ะ');
-                $('#resondiv').css('border' , 'solid 1px red');
+                $('#resondiv').css('border', 'solid 1px red');
                 return false;
-            }else{
-                if(checkaction == "notapprove"){
-                    notApproveData(kbnocan,resoncan)
-                }else{
-                    cancelData(kbnocan,resoncan);
+            } else {
+                if (checkaction == "notapprove") {
+                    notApproveData(kbnocan, resoncan)
+                } else {
+                    cancelData(kbnocan, resoncan);
                 }
-                
+
             }
         });
 
@@ -198,8 +198,8 @@ $(document).ready(function () {
 
 
         // Check ค่าว่าง Catname
-        $('#cat_name').keyup(function(){
-            if($(this).val() != ""){
+        $('#cat_name').keyup(function () {
+            if ($(this).val() != "") {
                 $('#cat_name').removeClass('clscatname');
                 $('#catalert').html('');
             }
@@ -276,7 +276,7 @@ $(document).ready(function () {
             let search = $(this).val();
             let checkdept_readonly = $('#checkdept_readonly').val();
             if ($(this).val() != "") {
-                searchListdataRead(search ,checkdept_readonly);
+                searchListdataRead(search, checkdept_readonly);
             } else {
                 $('#searchListresult_read').html('');
             }
@@ -596,16 +596,49 @@ $(document).ready(function () {
         ////////// Control comment section
         //////////////////////////////////////////
 
-if($('#checkEcodeV').val() == $('#checkecode').val()){
-    $('#commentzone').css('display' , 'none');
-}else{
-    $('#commentzone').css('display' , '');
-}
+        if ($('#checkEcodeV').val() == $('#checkecode').val()) {
+            $('#commentzone').css('display', 'none');
+        } else {
+            $('#commentzone').css('display', '');
+        }
+
+
+
+        // Control reply
+        $(document).on('click', '#btn_reply', function () {
+            let data_rpuserpost = $(this).attr("data_rpuserpost");
+            let data_rpid = $(this).attr("data_rpid");
+            let data_rpkbno = $(this).attr("data_rpkbno");
+
+            $('#cm_cmid').val(data_rpid);
+            $('#cm_kbno').val(data_rpkbno);
+            $('#userpost').text(data_rpuserpost);
+        });
 
         ///////////////////////////////////////////
         ////////// Control comment section
         //////////////////////////////////////////
 
+
+        // Control reply
+        $(document).on('click', '#btn_reply', function () {
+            let data_rpuserpost = $(this).attr("data_rpuserpost");
+            let data_rpid = $(this).attr("data_rpid");
+            let data_rpkbno = $(this).attr("data_rpkbno");
+
+            $('#cm_cmid').val(data_rpid);
+            $('#cm_kbno').val(data_rpkbno);
+            $('#userpost').text(data_rpuserpost);
+        });
+
+
+
+
+        // Save Reply
+        $('#btn_saveReply').click(function () {
+            // Run function
+            saveReply();
+        });
 
 
 
@@ -665,6 +698,32 @@ if($('#checkEcodeV').val() == $('#checkecode').val()){
             }
             // saveComment();
         });
+
+
+
+        // Control reply
+        $(document).on('click', '#btn_reply', function () {
+            let data_rpuserpost = $(this).attr("data_rpuserpost");
+            let data_rpid = $(this).attr("data_rpid");
+            let data_rpkbno = $(this).attr("data_rpkbno");
+
+            $('#cm_cmid').val(data_rpid);
+            $('#cm_kbno').val(data_rpkbno);
+            $('#userpost').text(data_rpuserpost);
+        });
+
+
+
+
+        // Save Reply
+        $('#btn_saveReply').click(function () {
+            // Run function
+            saveReply();
+        });
+
+
+
+
     }
 
 

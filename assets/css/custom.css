@@ -41,6 +41,11 @@ a:hover {
 	border-radius: 45px;
 }
 
+.sizeImageReply {
+	width: 50px;
+	border-radius: 45px;
+}
+
 .userPostFont {
 	font-size: 12px;
 }

@@ -14,7 +14,7 @@ function addCategory() {
             $('#spinner').html('<div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status"><span class="sr-only">Loading...</span></div>');
         },
         success: function (data) {
-            if(data == "บันทึกสำเร็จ"){
+            if (data == "บันทึกสำเร็จ") {
                 $('#cat_name').removeClass('clscatname');
                 $('#catalert').fadeIn(500);
                 $('#catalert').html('<div class="alert alert-success alert-dismissible fade show" role="alert">บันทึกข้อมูลเรียบร้อยแล้ว<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
@@ -23,22 +23,22 @@ function addCategory() {
                 $('#cat_memo').val('');
                 loadCategory();
                 $('#tb_category').dataTable();
-            }else if(data == "บันทึกไม่สำเร็จ"){
+            } else if (data == "บันทึกไม่สำเร็จ") {
                 alert(data);
-            }else if(data == "ไม่ได้กรอกชื่อหมวดหมู่"){
+            } else if (data == "ไม่ได้กรอกชื่อหมวดหมู่") {
                 $('#catalert').fadeIn(500);
                 $('#catalert').html('<div class="alert alert-danger alert-dismissible fade show" role="alert">กรุณากรอกชื่อหมวดหมู่ด้วยค่ะ<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                 $('#cat_name').addClass('clscatname');
                 $('#cat_name').val('');
                 $('#cat_memo').val('');
-            }else{
+            } else {
                 $('#catalert').fadeIn(500);
                 $('#catalert').html('<div class="alert alert-danger alert-dismissible fade show" role="alert">ชื่อหมวดหมู่ซ้ำในระบบค่ะ กรุณาตรวจสอบ!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
                 $('#cat_name').val('');
                 $('#cat_memo').val('');
             }
-            
-           
+
+
         }
     });
 }
@@ -64,7 +64,7 @@ function loadCategory() {
 
 
 /////////// Edit Category
-function editCategory(data_id,data_catname,data_catmemo) {
+function editCategory(data_id, data_catname, data_catmemo) {
     $.ajax({
         url: "/intsys/kb/main/editCategory",
         method: "POST",
@@ -78,16 +78,16 @@ function editCategory(data_id,data_catname,data_catmemo) {
         },
         success: function (res) {
 
-                $('#spinner').fadeIn(500);
-                $('#spinner').html('<div class="alert alert-success" role="alert">แก้ไขข้อมูลเรียบร้อยแล้ว</div>');
-                $('#spinner').fadeOut(3000);
-                $('#cat_name').val('');
-                $('#cat_memo').val('');
-                $('#cat_autoid').val('');
-                $('#btn_addCategory').text('เพิ่มหมวดหมู่');
-                $('#btn_addCategory').removeClass("button-amber").addClass("button-dirtygreen");
-                loadCategory();
-                $('#tb_category').dataTable();
+            $('#spinner').fadeIn(500);
+            $('#spinner').html('<div class="alert alert-success" role="alert">แก้ไขข้อมูลเรียบร้อยแล้ว</div>');
+            $('#spinner').fadeOut(3000);
+            $('#cat_name').val('');
+            $('#cat_memo').val('');
+            $('#cat_autoid').val('');
+            $('#btn_addCategory').text('เพิ่มหมวดหมู่');
+            $('#btn_addCategory').removeClass("button-amber").addClass("button-dirtygreen");
+            loadCategory();
+            $('#tb_category').dataTable();
         }
     });
 }
@@ -107,14 +107,14 @@ function delCategory(data_id) {
         },
         success: function (res) {
 
-                $('#spinner').fadeIn(500);
-                $('#spinner').html('<div class="alert alert-danger" role="alert">ลบข้อมูลเรียบร้อยแล้ว</div>');
-                $('#spinner').fadeOut(3000);
-                $('#cat_name').val('');
-                $('#cat_memo').val('');
-                loadCategory();
-                $('#tb_category').dataTable();
-            
+            $('#spinner').fadeIn(500);
+            $('#spinner').html('<div class="alert alert-danger" role="alert">ลบข้อมูลเรียบร้อยแล้ว</div>');
+            $('#spinner').fadeOut(3000);
+            $('#cat_name').val('');
+            $('#cat_memo').val('');
+            loadCategory();
+            $('#tb_category').dataTable();
+
 
         }
     });
@@ -144,27 +144,26 @@ function delCategory(data_id) {
 //////////// Data function
 ////////////////////////////////////////////////////////////////////////
 
-function loaddataByDept()
-{
+function loaddataByDept() {
     $.ajax({
-        url:"/intsys/kb/main/loaddatabydept",
-        method:"POST",
-        data:{
-            
-        },
-        beforeSend:function(){
+        url: "/intsys/kb/main/loaddatabydept",
+        method: "POST",
+        data: {
 
         },
-        success:function(res){
+        beforeSend: function () {
+
+        },
+        success: function (res) {
             $('#showDataList').html(res);
 
             $('#dataListTable').dataTable({
                 columnDefs: [
-				{ "width": "15%", "targets": 0 },
-				{ "width": "10%", "targets": 2 },
-			],
+                    { "width": "15%", "targets": 0 },
+                    { "width": "10%", "targets": 2 },
+                ],
                 "ordering": false,
-                pageLength : 5,
+                pageLength: 5,
                 lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']]
             });
         }
@@ -174,66 +173,63 @@ function loaddataByDept()
 
 
 // Search data on listdata page
-function searchListdata(search)
-{
+function searchListdata(search) {
     $.ajax({
-        url:"/intsys/kb/main/searchlistdata",
-        method:"POST",
-        data:{
-            search:search
+        url: "/intsys/kb/main/searchlistdata",
+        method: "POST",
+        data: {
+            search: search
         },
-        beforeSend:function(){
+        beforeSend: function () {
 
         },
-        success:function(res){
+        success: function (res) {
             $('#searchListresult').html(res);
 
         }
     });
 }
 // Search data on listdata read page
-function searchListdataRead(search , deptcoderead)
-{
+function searchListdataRead(search, deptcoderead) {
     $.ajax({
-        url:"/intsys/kb/main/searchlistdata_read",
-        method:"POST",
-        data:{
-            search:search,
-            deptcoderead:deptcoderead
+        url: "/intsys/kb/main/searchlistdata_read",
+        method: "POST",
+        data: {
+            search: search,
+            deptcoderead: deptcoderead
         },
-        beforeSend:function(){
+        beforeSend: function () {
 
         },
-        success:function(res){
+        success: function (res) {
             $('#searchListresult_read').html(res);
-         
+
         }
     });
 }
 
 
 
-function loaddataByDeptRead(deptcoderead)
-{
+function loaddataByDeptRead(deptcoderead) {
     $.ajax({
-        url:"/intsys/kb/main/loaddatabydept_read",
-        method:"POST",
-        data:{
+        url: "/intsys/kb/main/loaddatabydept_read",
+        method: "POST",
+        data: {
             deptcoderead: deptcoderead
         },
-        beforeSend:function(){
+        beforeSend: function () {
 
         },
-        success:function(res){
+        success: function (res) {
             $('#showDataList_read').html(res);
-  
+
             $('#dataListTable').dataTable({
                 columnDefs: [
-				{ "width": "15%", "targets": 0 },
-				{ "width": "10%", "targets": 2 },
-			],
+                    { "width": "15%", "targets": 0 },
+                    { "width": "10%", "targets": 2 },
+                ],
                 "ordering": false,
-                pageLength : 5,
+                pageLength: 5,
                 lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']]
             });
         }
@@ -242,63 +238,61 @@ function loaddataByDeptRead(deptcoderead)
 
 
 
-function loaddataWait()
-{
+function loaddataWait() {
     $.ajax({
-        url:"/intsys/kb/main/loaddataWait",
-        method:"POST",
-        data:{
+        url: "/intsys/kb/main/loaddataWait",
+        method: "POST",
+        data: {
 
         },
-        beforeSend:function(){
+        beforeSend: function () {
 
         },
-        success:function(res){
+        success: function (res) {
             $('#loadWait').html(res);
 
 
             $('#tb_datalistWait').dataTable({
                 columnDefs: [
-				{ "width": "15%", "targets": 0 },
-				{ "width": "15%", "targets": 2 },
-			],
+                    { "width": "15%", "targets": 0 },
+                    { "width": "15%", "targets": 2 },
+                ],
                 "ordering": false,
-                pageLength : 10,
-                lengthMenu: [[5, 10, 20,50,100,300,500 -1], [5, 10, 20,50,100,300,500 ,'Todos']]
+                pageLength: 10,
+                lengthMenu: [[5, 10, 20, 50, 100, 300, 500 - 1], [5, 10, 20, 50, 100, 300, 500, 'Todos']]
             });
-			    
-            
+
+
         }
     });
 }
 
 
-function loaddataWaitOwner()
-{
+function loaddataWaitOwner() {
     $.ajax({
-        url:"/intsys/kb/main/loaddataWaitOwner",
-        method:"POST",
-        data:{
+        url: "/intsys/kb/main/loaddataWaitOwner",
+        method: "POST",
+        data: {
 
         },
-        beforeSend:function(){
+        beforeSend: function () {
 
         },
-        success:function(res){
+        success: function (res) {
             $('#loadWaitOwner').html(res);
 
 
             $('#tb_datalistWaitOwner').dataTable({
                 columnDefs: [
-				{ "width": "15%", "targets": 0 },
-				{ "width": "15%", "targets": 2 },
-			],
+                    { "width": "15%", "targets": 0 },
+                    { "width": "15%", "targets": 2 },
+                ],
                 "ordering": false,
-                pageLength : 10,
-                lengthMenu: [[5, 10, 20,50,100,300,500 -1], [5, 10, 20,50,100,300,500 ,'Todos']]
+                pageLength: 10,
+                lengthMenu: [[5, 10, 20, 50, 100, 300, 500 - 1], [5, 10, 20, 50, 100, 300, 500, 'Todos']]
             });
-			    
-            
+
+
         }
     });
 }
@@ -308,32 +302,31 @@ function loaddataWaitOwner()
 
 
 
-function loaddataWaitOwnerTotal()
-{
+function loaddataWaitOwnerTotal() {
     $.ajax({
-        url:"/intsys/kb/main/loaddataWaitOwnerTotal",
-        method:"POST",
-        data:{
+        url: "/intsys/kb/main/loaddataWaitOwnerTotal",
+        method: "POST",
+        data: {
 
         },
-        beforeSend:function(){
+        beforeSend: function () {
 
         },
-        success:function(res){
+        success: function (res) {
             $('#loadWaitOwner').html(res);
 
 
             $('#tb_datalistWaitOwner').dataTable({
                 columnDefs: [
-				{ "width": "15%", "targets": 0 },
-				{ "width": "15%", "targets": 2 },
-			],
+                    { "width": "15%", "targets": 0 },
+                    { "width": "15%", "targets": 2 },
+                ],
                 "ordering": false,
-                pageLength : 10,
-                lengthMenu: [[5, 10, 20,50,100,300,500 -1], [5, 10, 20,50,100,300,500 ,'Todos']]
+                pageLength: 10,
+                lengthMenu: [[5, 10, 20, 50, 100, 300, 500 - 1], [5, 10, 20, 50, 100, 300, 500, 'Todos']]
             });
-			    
-            
+
+
         }
     });
 }
@@ -344,32 +337,31 @@ function loaddataWaitOwnerTotal()
 
 
 
-function loaddataWaitOwnerPub()
-{
+function loaddataWaitOwnerPub() {
     $.ajax({
-        url:"/intsys/kb/main/loaddataWaitOwnerPub",
-        method:"POST",
-        data:{
+        url: "/intsys/kb/main/loaddataWaitOwnerPub",
+        method: "POST",
+        data: {
 
         },
-        beforeSend:function(){
+        beforeSend: function () {
 
         },
-        success:function(res){
+        success: function (res) {
             $('#loadWaitOwner').html(res);
 
 
             $('#tb_datalistWaitOwner').dataTable({
                 columnDefs: [
-				{ "width": "15%", "targets": 0 },
-				{ "width": "15%", "targets": 2 },
-			],
+                    { "width": "15%", "targets": 0 },
+                    { "width": "15%", "targets": 2 },
+                ],
                 "ordering": false,
-                pageLength : 10,
-                lengthMenu: [[5, 10, 20,50,100,300,500 -1], [5, 10, 20,50,100,300,500 ,'Todos']]
+                pageLength: 10,
+                lengthMenu: [[5, 10, 20, 50, 100, 300, 500 - 1], [5, 10, 20, 50, 100, 300, 500, 'Todos']]
             });
-			    
-            
+
+
         }
     });
 }
@@ -379,63 +371,61 @@ function loaddataWaitOwnerPub()
 
 
 
-function loaddataWaitOwnerCan()
-{
+function loaddataWaitOwnerCan() {
     $.ajax({
-        url:"/intsys/kb/main/loaddataWaitOwnerCan",
-        method:"POST",
-        data:{
+        url: "/intsys/kb/main/loaddataWaitOwnerCan",
+        method: "POST",
+        data: {
 
         },
-        beforeSend:function(){
+        beforeSend: function () {
 
         },
-        success:function(res){
+        success: function (res) {
             $('#loadWaitOwner').html(res);
 
 
             $('#tb_datalistWaitOwner').dataTable({
                 columnDefs: [
-				{ "width": "15%", "targets": 0 },
-				{ "width": "15%", "targets": 2 },
-			],
+                    { "width": "15%", "targets": 0 },
+                    { "width": "15%", "targets": 2 },
+                ],
                 "ordering": false,
-                pageLength : 10,
-                lengthMenu: [[5, 10, 20,50,100,300,500 -1], [5, 10, 20,50,100,300,500 ,'Todos']]
+                pageLength: 10,
+                lengthMenu: [[5, 10, 20, 50, 100, 300, 500 - 1], [5, 10, 20, 50, 100, 300, 500, 'Todos']]
             });
-			    
-            
+
+
         }
     });
 }
 
 
-function loaddataWaitOwnerNot()
-{
+function loaddataWaitOwnerNot() {
     $.ajax({
-        url:"/intsys/kb/main/loaddataWaitOwnerNot",
-        method:"POST",
-        data:{
+        url: "/intsys/kb/main/loaddataWaitOwnerNot",
+        method: "POST",
+        data: {
 
         },
-        beforeSend:function(){
+        beforeSend: function () {
 
         },
-        success:function(res){
+        success: function (res) {
             $('#loadWaitOwner').html(res);
 
 
             $('#tb_datalistWaitOwner').dataTable({
                 columnDefs: [
-				{ "width": "15%", "targets": 0 },
-				{ "width": "15%", "targets": 2 },
-			],
+                    { "width": "15%", "targets": 0 },
+                    { "width": "15%", "targets": 2 },
+                ],
                 "ordering": false,
-                pageLength : 10,
-                lengthMenu: [[5, 10, 20,50,100,300,500 -1], [5, 10, 20,50,100,300,500 ,'Todos']]
+                pageLength: 10,
+                lengthMenu: [[5, 10, 20, 50, 100, 300, 500 - 1], [5, 10, 20, 50, 100, 300, 500, 'Todos']]
             });
-			    
-            
+
+
         }
     });
 }
@@ -445,25 +435,24 @@ function loaddataWaitOwnerNot()
 
 
 
-function approveData(data_kbno)
-{
+function approveData(data_kbno) {
     $.ajax({
-        url:"/intsys/kb/main/approveData",
-        method:"POST",
-        data:{
+        url: "/intsys/kb/main/approveData",
+        method: "POST",
+        data: {
             data_kbno: data_kbno
         },
-        beforeSend:function(){
+        beforeSend: function () {
 
         },
-        success:function(res){
-         
-                $('#alertApp').fadeIn(200);
-                $('#alertApp').html('<div class="alert alert-success" role="alert">รายการดังกล่าวถูกเผยแพร่ เรียบร้อยแล้ว</div>');
-                $('#alertApp').fadeOut(5000);
-                loaddataWait();
-                location.reload();
-            
+        success: function (res) {
+
+            $('#alertApp').fadeIn(200);
+            $('#alertApp').html('<div class="alert alert-success" role="alert">รายการดังกล่าวถูกเผยแพร่ เรียบร้อยแล้ว</div>');
+            $('#alertApp').fadeOut(5000);
+            loaddataWait();
+            location.reload();
+
         }
     });
 }
@@ -471,80 +460,77 @@ function approveData(data_kbno)
 
 
 
-function cancelData(kbnocan,resoncan)
-{
+function cancelData(kbnocan, resoncan) {
     $.ajax({
-        url:"/intsys/kb/main/cancelData",
-        method:"POST",
-        data:{
+        url: "/intsys/kb/main/cancelData",
+        method: "POST",
+        data: {
             kbnocan: kbnocan,
             resoncan: resoncan
         },
-        beforeSend:function(){
+        beforeSend: function () {
 
         },
-        success:function(res){
-   
-                $('#alertApp').fadeIn(200);
-                $('#alertApp').html('<div class="alert alert-success" role="alert">รายการดังกล่าวถูกยกเลิก เรียบร้อยแล้ว</div>');
-                $('#alertApp').fadeOut(5000);
-                loaddataWait();
-                location.reload();
-            
+        success: function (res) {
+
+            $('#alertApp').fadeIn(200);
+            $('#alertApp').html('<div class="alert alert-success" role="alert">รายการดังกล่าวถูกยกเลิก เรียบร้อยแล้ว</div>');
+            $('#alertApp').fadeOut(5000);
+            loaddataWait();
+            location.reload();
+
         }
     });
 }
 
 
-function notApproveData(kbnocan,resoncan)
-{
+function notApproveData(kbnocan, resoncan) {
     $.ajax({
-        url:"/intsys/kb/main/notApproveData",
-        method:"POST",
-        data:{
+        url: "/intsys/kb/main/notApproveData",
+        method: "POST",
+        data: {
             kbnocan: kbnocan,
             resoncan: resoncan
         },
-        beforeSend:function(){
+        beforeSend: function () {
 
         },
-        success:function(res){
-   
-                $('#alertApp').fadeIn(200);
-                $('#alertApp').html('<div class="alert alert-success" role="alert">รายการดังกล่าวถูกยกเลิก เรียบร้อยแล้ว</div>');
-                $('#alertApp').fadeOut(5000);
-                loaddataWait();
-                location.reload();
-            
+        success: function (res) {
+
+            $('#alertApp').fadeIn(200);
+            $('#alertApp').html('<div class="alert alert-success" role="alert">รายการดังกล่าวถูกยกเลิก เรียบร้อยแล้ว</div>');
+            $('#alertApp').fadeOut(5000);
+            loaddataWait();
+            location.reload();
+
         }
     });
 }
 
 
-function controlByPermission()
-{
+function controlByPermission() {
     $.ajax({
-        url:"/intsys/kb/main/getPermission",
-        method:"POST",
-        data:{
+        url: "/intsys/kb/main/getPermission",
+        method: "POST",
+        data: {
 
         },
-        dataType:"json",
-        beforeSend:function(){
+        dataType: "json",
+        beforeSend: function () {
 
         },
-        success:function(res){
+        success: function (res) {
 
 
-            for(let i =0; i<res.length;i++){
+            for (let i = 0; i < res.length; i++) {
                 pergname = res[i].perg_name;
                 pergApp = res[i].perg_approve_data;
             }
-            if(pergname === "admin" || pergname === "superuser" || pergname === "manager"){
-                if(pergApp === 1){
-                    $('#checkDataBtn').css('display' , '');
+            if (pergname === "admin" || pergname === "superuser" || pergname === "manager") {
+                if (pergApp === 1) {
+                    $('#checkDataBtn').css('display', '');
                 }
-                
+
             }
         }
     });
@@ -596,19 +582,18 @@ function controlByPermission()
 //////////// Comment function
 ////////////////////////////////////////////////////////////////////////
 
-function saveComment()
-{
+function saveComment() {
     $.ajax({
-        url:"/intsys/kb/main/savecomment",
-        method:"POST",
-        data:$('#frm_comment').serialize(),
-        success:function(res){
-     
+        url: "/intsys/kb/main/savecomment",
+        method: "POST",
+        data: $('#frm_comment').serialize(),
+        success: function (res) {
+
             $('#rt_star').val('');
             $('#rt_comment').val('');
-            if(res == "Insert fail"){
-                alert('คุณได้ทำการให้คะแนนรายการดังกล่าวไปแล้วไม่สามารถให้คะแนนซ้ำอีกได้');
-            }else{
+            if (res == "Insert fail") {
+                // alert('คุณได้ทำการให้คะแนนรายการดังกล่าวไปแล้วไม่สามารถให้คะแนนซ้ำอีกได้');
+            } else {
                 $('#alrtComment').html('<div class="alert alert-success" role="alert">บันทึกข้อมูล เรียบร้อยแล้ว</div>');
             }
             location.reload();
@@ -617,17 +602,33 @@ function saveComment()
 }
 
 
-function loadComment(kbno)
+function loadComment(kbno) {
+    $.ajax({
+        url: "/intsys/kb/main/loadcomment",
+        method: "POST",
+        data: {
+            kbno: kbno
+        },
+        success: function (res) {
+            $('#show_comment').html(res);
+
+        }
+    });
+}
+
+
+
+function saveReply() 
 {
     $.ajax({
-        url:"/intsys/kb/main/loadcomment",
-        method:"POST",
-        data:{
-            kbno:kbno
-        },
-        success:function(res){
-            $('#show_comment').html(res);
-      
+        url: "/intsys/kb/main/saveReply",
+        method: "POST",
+        data: $('#frm_reply').serialize(),
+        success: function (res) {
+            console.log(res);
+            if(res == "บันทึกสำเร็จ"){
+                location.reload();
+            }
         }
     });
 }
@@ -649,28 +650,27 @@ function loadComment(kbno)
 /////////////////////////////////////////////////////////////////////////
 //////////// Index page function load data
 ////////////////////////////////////////////////////////////////////////
-function loadToptenDataList()
-{
+function loadToptenDataList() {
     $.ajax({
-        url:"/intsys/kb/main/loadToptenData",
-        method:"POST",
-        data:{
+        url: "/intsys/kb/main/loadToptenData",
+        method: "POST",
+        data: {
 
         },
-        beforeSend:function(){
+        beforeSend: function () {
 
         },
-        success:function(res){
+        success: function (res) {
             $('#showDataToptenList').html(res);
 
             $('#tbl_toptenlist').dataTable({
                 columnDefs: [
-				{ "width": "15%", "targets": 0 },
-				{ "width": "15%", "targets": 2 },
-			],
+                    { "width": "15%", "targets": 0 },
+                    { "width": "15%", "targets": 2 },
+                ],
                 "ordering": false,
-                pageLength : 10,
-                lengthMenu: [[5, 10, 20,50,100,300,500 -1], [5, 10, 20,50,100,300,500 ,'Todos']]
+                pageLength: 10,
+                lengthMenu: [[5, 10, 20, 50, 100, 300, 500 - 1], [5, 10, 20, 50, 100, 300, 500, 'Todos']]
             });
         }
     });
@@ -678,20 +678,19 @@ function loadToptenDataList()
 
 
 
-function searchIndex(search)
-{
+function searchIndex(search) {
     $.ajax({
-        url:"/intsys/kb/main/searchindex",
-        method:"POST",
-        data:{
-            search:search
+        url: "/intsys/kb/main/searchindex",
+        method: "POST",
+        data: {
+            search: search
         },
-        beforeSend:function(){
+        beforeSend: function () {
 
         },
-        success:function(res){
+        success: function (res) {
             $('#searchresult').html(res);
-   
+
         }
     });
 }
@@ -716,18 +715,17 @@ function searchIndex(search)
 //////////// Edit page
 ////////////////////////////////////////////////////////////////////////
 
-function getFileEdit(kbno)
-{
+function getFileEdit(kbno) {
     $.ajax({
-        url:"/intsys/kb/main/loadFileEdit",
-        method:"POST",
-        data:{
-            kbno:kbno
+        url: "/intsys/kb/main/loadFileEdit",
+        method: "POST",
+        data: {
+            kbno: kbno
         },
-        beforeSend:function(){
+        beforeSend: function () {
 
         },
-        success:function(res){
+        success: function (res) {
             $('#showOldFile').html(res);
         }
     });

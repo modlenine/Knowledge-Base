@@ -524,3 +524,47 @@
 <!-- /////////////////////////////////////////////////////////////////////////
 //////////// รายการรอตรวจสอบ ของ Owner
 //////////////////////////////////////////////////////////////////////// -->
+
+
+
+
+
+
+
+
+
+
+<!-- /////////////////////////////////////////////////////////////////////////
+//////////// Reply comment
+//////////////////////////////////////////////////////////////////////// -->
+<div class="modal fade" id="md_reply" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">ตอบกลับคุณ <span id="userpost"></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="frm_reply">
+            <div class="modal-body">
+            <input hidden type="text" name="cm_cmid" id="cm_cmid">
+            <input hidden type="text" name="cm_kbno" id="cm_kbno">
+
+
+                <div id="modalbody" class="row">
+                    <div class="col-lg-12">
+                        <textarea name="reply_text" id="reply_text" cols="30" rows="10" class="form-control"></textarea>
+                    </div>
+                    <div class="col-lg-12">
+                        <input type="button" id="btn_saveReply" name="btn_saveReply" class="button button-mini button-circle button-3d button-second" value="ตอบกลับ">
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- /////////////////////////////////////////////////////////////////////////
+//////////// Reply comment
+//////////////////////////////////////////////////////////////////////// -->

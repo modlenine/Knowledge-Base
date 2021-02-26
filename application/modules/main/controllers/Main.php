@@ -350,10 +350,12 @@ class Main extends MX_Controller
         if (!$this->input->post("rt_submit")) {
             $ecodeC = getUser()->ecode;
             $kbnoC = $this->input->post("rt_kbno");
-            if (checkDupricateComment($ecodeC, $kbnoC) == true) {
-                $this->main->savecomment();
+            if (checkDupRat($ecodeC , $kbnoC) == true) {
+                $this->main->saveRating();
+                $this->main->saveComment();
             } else {
                 echo "Insert fail";
+                $this->main->saveComment();
             }
         }
     }
@@ -363,6 +365,11 @@ class Main extends MX_Controller
         if ($this->input->post("kbno")) {
             $this->main->loadcomment();
         }
+    }
+
+    public function saveReply()
+    {
+        $this->main->saveReply();
     }
 
     /////////////////////////////////////////////////////////////////////////

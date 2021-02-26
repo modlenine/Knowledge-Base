@@ -567,10 +567,10 @@ class Main_model extends CI_Model
     //////////// COMMENT ZONE
     ////////////////////////////////////////////////////////////////////////
 
-public function savecomment()
+public function saveRating()
 {
     $arComment = array(
-        "rt_comment" => $this->input->post("rt_comment"),
+        // "rt_comment" => $this->input->post("rt_comment"),
         "rt_star" => $this->input->post("rt_star"),
         "rt_kbno" => $this->input->post("rt_kbno"),
         "rt_userpost" => getUser()->Fname." ".getUser()->Lname,
@@ -581,6 +581,26 @@ public function savecomment()
     if($this->db->insert("kb_rating",$arComment)){
         echo "Insert success";
     }
+
+    
+}
+
+public function saveComment()
+{
+    $arComment = array(
+        "cm_text" => $this->input->post("rt_comment"),
+        // "rt_star" => $this->input->post("rt_star"),
+        "cm_kbno" => $this->input->post("rt_kbno"),
+        "cm_user" => getUser()->Fname." ".getUser()->Lname,
+        "cm_ecode" => getUser()->ecode,
+        "cm_datetime" => date("Y-m-d H:i:s")
+    );
+
+    if($this->db->insert("kb_comment",$arComment)){
+        echo "Insert success";
+    }
+
+    
 }
 
 public function loadcomment()
@@ -623,6 +643,26 @@ public function loadcomment()
         ';
     }
     echo $output;
+}
+
+
+
+
+public function saveReply()
+{
+    $arReply = array(
+        "cm_cmid" => $this->input->post("cm_cmid"),
+        "cm_reply" => $this->input->post("reply_text"),
+        "cm_kbno" => $this->input->post("cm_kbno"),
+        "cm_user" => getUser()->Fname." ".getUser()->Lname,
+        "cm_ecode" => getUser()->ecode,
+        "cm_datetime" => date("Y-m-d H:i:s")
+    );
+    if($this->db->insert("kb_comment" , $arReply)){
+        echo "บันทึกสำเร็จ";
+    }else{
+        echo "บันทึกไม่สำเร็จ";
+    }
 }
 
     /////////////////////////////////////////////////////////////////////////
