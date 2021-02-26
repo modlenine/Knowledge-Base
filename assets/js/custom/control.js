@@ -196,6 +196,16 @@ $(document).ready(function () {
 
         });
 
+
+        // Check ค่าว่าง Catname
+        $('#cat_name').keyup(function(){
+            if($(this).val() != ""){
+                $('#cat_name').removeClass('clscatname');
+                $('#catalert').html('');
+            }
+        });
+
+
         $(document).on('click', '#catEdit', function () {
             let data_id = $(this).attr("data_id");
             let data_catname = $(this).attr("data_catname");

@@ -466,19 +466,32 @@ class Main_model extends CI_Model
     // Category Zone
     public function saveCategory()
     {
-        $arSaveCategory = array(
-            "cat_name" => $this->input->post("cat_name"),
-            "cat_deptcode" => getUser()->DeptCode,
-            "cat_memo" => $this->input->post("cat_memo"),
-            "cat_usercreate" => getUser()->Fname . " " . getUser()->Lname,
-            "cat_ecodecreate" => getUser()->ecode,
-            "cat_datetimecreate" => date("Y-m-d H:i:s")
-        );
-        if ($this->db->insert("kb_category", $arSaveCategory)) {
-            echo TRUE;
-        } else {
-            echo FALSE;
+        $catname = $this->input->post("cat_name");
+        $deptcode = getUser()->DeptCode;
+        if(checkDubCate($catname , $deptcode) == true){
+            if($catname != ""){
+                $arSaveCategory = array(
+                    "cat_name" => $this->input->post("cat_name"),
+                    "cat_deptcode" => getUser()->DeptCode,
+                    "cat_memo" => $this->input->post("cat_memo"),
+                    "cat_usercreate" => getUser()->Fname . " " . getUser()->Lname,
+                    "cat_ecodecreate" => getUser()->ecode,
+                    "cat_datetimecreate" => date("Y-m-d H:i:s")
+                );
+                if ($this->db->insert("kb_category", $arSaveCategory)) {
+                    echo "บันทึกสำเร็จ";
+                } else {
+                    echo "บันทึกไม่สำเร็จ";
+                }
+            }else{
+                echo "ไม่ได้กรอกชื่อหมวดหมู่";
+            }
+            
+
+        }else{
+            echo "พบข้อมูลซ้ำ";
         }
+        
     }
     public function editCategory()
     {
@@ -640,6 +653,15 @@ public function loadcomment()
         $searchText = '';
 
         $searchText = $this->input->post("search");
+        $idArr = explode(" ", $searchText);
+        $context = " CONCAT(kb_no,' ',
+        kb_title,' ',
+        kb_detail,' ',
+        kb_cause,' ',
+        kb_action,' ',
+        kb_conclusion,' ',
+        kb_category) ";
+        $condition = " $context LIKE '%" . implode("%' OR $context LIKE '%", $idArr) . "%' ";
 
         $sql = $this->db->query("SELECT 
         kb_no , 
@@ -651,13 +673,7 @@ public function loadcomment()
         kb_conclusion ,
         kb_ecodepost
         FROM kb_main 
-        WHERE CONCAT(kb_no,' ',
-        kb_title,' ',
-        kb_detail,' ',
-        kb_cause,' ',
-        kb_action,' ',
-        kb_conclusion,' ',
-        kb_category) LIKE '%$searchText%'
+        WHERE $condition
         ORDER BY kb_autoid DESC");
 
         $output = '<ul class="list-group">';
@@ -699,6 +715,15 @@ public function searchlistdata($deptcode)
     $searchText = '';
 
     $searchText = $this->input->post("search");
+    $idArr = explode(" ", $searchText);
+    $context = " CONCAT(kb_no,' ',
+    kb_title,' ',
+    kb_detail,' ',
+    kb_cause,' ',
+    kb_action,' ',
+    kb_conclusion,' ',
+    kb_category) ";
+    $condition = " $context LIKE '%" . implode("%' OR $context LIKE '%", $idArr) . "%' ";
 
     $sql = $this->db->query("SELECT 
     kb_no , 
@@ -710,13 +735,7 @@ public function searchlistdata($deptcode)
     kb_conclusion ,
     kb_ecodepost
     FROM kb_main 
-    WHERE CONCAT(kb_no,' ',
-    kb_title,' ',
-    kb_detail,' ',
-    kb_cause,' ',
-    kb_action,' ',
-    kb_conclusion,' ',
-    kb_category) LIKE '%$searchText%' AND kb_deptcodepost = '$deptcode'
+    WHERE $condition AND kb_deptcodepost = '$deptcode'
     ORDER BY kb_autoid DESC
     LIMIT 50");
 
@@ -757,6 +776,16 @@ public function searchlistdata($deptcode)
         $deptcoderead = '';
     
         $searchText = $this->input->post("search");
+        $idArr = explode(" ", $searchText);
+        $context = " CONCAT(kb_no,' ',
+        kb_title,' ',
+        kb_detail,' ',
+        kb_cause,' ',
+        kb_action,' ',
+        kb_conclusion,' ',
+        kb_category) ";
+        $condition = " $context LIKE '%" . implode("%' OR $context LIKE '%", $idArr) . "%' ";
+
         $deptcoderead = $this->input->post("deptcoderead");
     
         $sql = $this->db->query("SELECT 
@@ -769,13 +798,7 @@ public function searchlistdata($deptcode)
         kb_conclusion ,
         kb_ecodepost
         FROM kb_main 
-        WHERE CONCAT(kb_no,' ',
-        kb_title,' ',
-        kb_detail,' ',
-        kb_cause,' ',
-        kb_action,' ',
-        kb_conclusion,' ',
-        kb_category) LIKE '%$searchText%' AND kb_deptcodepost = '$deptcoderead'
+        WHERE $condition AND kb_deptcodepost = '$deptcoderead'
         ORDER BY kb_autoid DESC
         LIMIT 50");
     

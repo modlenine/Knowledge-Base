@@ -14,14 +14,31 @@ function addCategory() {
             $('#spinner').html('<div class="spinner-grow" style="width: 3rem; height: 3rem;" role="status"><span class="sr-only">Loading...</span></div>');
         },
         success: function (data) {
-            $('#spinner').fadeIn(500);
-            $('#spinner').html('<div class="alert alert-success" role="alert">บันทึกข้อมูลเรียบร้อยแล้ว</div>');
-            $('#spinner').fadeOut(3000);
-            $('#cat_name').val('');
-            $('#cat_memo').val('');
-            loadCategory();
-            $('#tb_category').dataTable();
-            console.log(data);
+            if(data == "บันทึกสำเร็จ"){
+                $('#cat_name').removeClass('clscatname');
+                $('#catalert').fadeIn(500);
+                $('#catalert').html('<div class="alert alert-success alert-dismissible fade show" role="alert">บันทึกข้อมูลเรียบร้อยแล้ว<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+
+                $('#cat_name').val('');
+                $('#cat_memo').val('');
+                loadCategory();
+                $('#tb_category').dataTable();
+            }else if(data == "บันทึกไม่สำเร็จ"){
+                alert(data);
+            }else if(data == "ไม่ได้กรอกชื่อหมวดหมู่"){
+                $('#catalert').fadeIn(500);
+                $('#catalert').html('<div class="alert alert-danger alert-dismissible fade show" role="alert">กรุณากรอกชื่อหมวดหมู่ด้วยค่ะ<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                $('#cat_name').addClass('clscatname');
+                $('#cat_name').val('');
+                $('#cat_memo').val('');
+            }else{
+                $('#catalert').fadeIn(500);
+                $('#catalert').html('<div class="alert alert-danger alert-dismissible fade show" role="alert">ชื่อหมวดหมู่ซ้ำในระบบค่ะ กรุณาตรวจสอบ!<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>');
+                $('#cat_name').val('');
+                $('#cat_memo').val('');
+            }
+            
+           
         }
     });
 }
@@ -140,7 +157,7 @@ function loaddataByDept()
         },
         success:function(res){
             $('#showDataList').html(res);
-            console.log(res);
+
             $('#dataListTable').dataTable({
                 columnDefs: [
 				{ "width": "15%", "targets": 0 },
@@ -170,7 +187,7 @@ function searchListdata(search)
         },
         success:function(res){
             $('#searchListresult').html(res);
-            console.log(res);
+
         }
     });
 }
@@ -189,7 +206,7 @@ function searchListdataRead(search , deptcoderead)
         },
         success:function(res){
             $('#searchListresult_read').html(res);
-            console.log(res);
+         
         }
     });
 }
@@ -209,7 +226,7 @@ function loaddataByDeptRead(deptcoderead)
         },
         success:function(res){
             $('#showDataList_read').html(res);
-            console.log(res);
+  
             $('#dataListTable').dataTable({
                 columnDefs: [
 				{ "width": "15%", "targets": 0 },
@@ -467,7 +484,7 @@ function cancelData(kbnocan,resoncan)
 
         },
         success:function(res){
-            console.log(res);
+   
                 $('#alertApp').fadeIn(200);
                 $('#alertApp').html('<div class="alert alert-success" role="alert">รายการดังกล่าวถูกยกเลิก เรียบร้อยแล้ว</div>');
                 $('#alertApp').fadeOut(5000);
@@ -492,7 +509,7 @@ function notApproveData(kbnocan,resoncan)
 
         },
         success:function(res){
-            console.log(res);
+   
                 $('#alertApp').fadeIn(200);
                 $('#alertApp').html('<div class="alert alert-success" role="alert">รายการดังกล่าวถูกยกเลิก เรียบร้อยแล้ว</div>');
                 $('#alertApp').fadeOut(5000);
@@ -517,7 +534,7 @@ function controlByPermission()
 
         },
         success:function(res){
-            console.log(res);
+
 
             for(let i =0; i<res.length;i++){
                 pergname = res[i].perg_name;
@@ -586,7 +603,7 @@ function saveComment()
         method:"POST",
         data:$('#frm_comment').serialize(),
         success:function(res){
-            console.log(res);
+     
             $('#rt_star').val('');
             $('#rt_comment').val('');
             if(res == "Insert fail"){
@@ -610,7 +627,7 @@ function loadComment(kbno)
         },
         success:function(res){
             $('#show_comment').html(res);
-            console.log(res);
+      
         }
     });
 }
@@ -674,7 +691,7 @@ function searchIndex(search)
         },
         success:function(res){
             $('#searchresult').html(res);
-            console.log(res);
+   
         }
     });
 }

@@ -1059,7 +1059,7 @@ function getuserWaitdata($ecode)
 
 function getuserWaitdataTotal($ecode)
 {
-    $sql = gfn()->db->query("SELECT kb_status FROM kb_main WHERE kb_ecodepost = '$ecode' AND kb_status not in ('ไม่อนุมัติรายการ') ");
+    $sql = gfn()->db->query("SELECT kb_status FROM kb_main WHERE kb_ecodepost = '$ecode' ");
     return $sql->num_rows();
 }
 
@@ -1321,4 +1321,31 @@ function toptenlist()
 
 /////////////////////////////////////////////////////////////////////////
 //////////// Index page
+////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////
+//////////// Category
+////////////////////////////////////////////////////////////////////////
+
+
+function checkDubCate($catname , $deptcode)
+{
+    $sql = gfn()->db->query("SELECT cat_name , cat_deptcode FROM kb_category WHERE cat_name = '$catname' AND cat_deptcode = '$deptcode' ");
+    $rscheck = $sql->num_rows();
+    if($rscheck != 0){
+        return false;
+    }else{
+        return true;
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////
+//////////// Category
 ////////////////////////////////////////////////////////////////////////

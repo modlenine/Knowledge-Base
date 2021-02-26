@@ -35,6 +35,7 @@ class Login extends MX_Controller {
            "title" => "Verify user page"
        );
        getContent("verifyuser" , $data);
+       getFooter();
     }
 
 

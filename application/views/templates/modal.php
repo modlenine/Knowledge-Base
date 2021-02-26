@@ -254,9 +254,8 @@
                         <a href="javascript:void(0)" id="btn_addCategory" class="button button-circle button-3d button-dirtygreen"><i class="icon-book3"></i>เพิ่มหมวดหมู่</a>
                     </div>
                 </form>
-                <div id="spinner"></div>
                 <hr>
-
+<div id="catalert"></div>
 
 
                 <div id="modalbody" class="row">
@@ -354,7 +353,7 @@
                             </div>
                             <div class="col-lg-6 form-group">
                                 <label>รหัสแผนก</label>
-                                <input type="text" name="user_deptcode_confirm" id="user_deptcode_confirm" class="form-control form-group">
+                                <input type="text" name="user_deptcode_confirm" id="user_deptcode_confirm" class="form-control form-group" required>
                                 <input hidden type="text" name="user_deptname_confirm" id="user_deptname_confirm" class="form-control form-group">
                             </div>
 
@@ -452,8 +451,8 @@
             <div class="modal-body">
             <div id="alertApp"></div>
 
-                <input type="text" name="check_kbno" id="check_kbno">
-                <input type="text" name="checkaction" id="checkaction">
+                <input hidden type="text" name="check_kbno" id="check_kbno">
+                <input hidden type="text" name="checkaction" id="checkaction">
 
                 <div class="row">
                     <div class="col-lg-12 form-group" id="resondiv">
