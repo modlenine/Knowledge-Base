@@ -59,6 +59,7 @@ class Login_model extends CI_Model
                 if (checkVerifyUser($_SESSION['ecode']) == false) {
                     header("refresh:0; url=" . base_url('verifyuser.html'));
                 } else {
+                    getUserAgent("Login เข้าใช้งานโปรแกรม","");
                     $uri = isset($_SESSION['RedirectKe']) ? $_SESSION['RedirectKe'] : '/intsys/kb';
                     header('location:' . $uri);
                     // header("refresh:0; url=" . base_url());
@@ -140,6 +141,7 @@ class Login_model extends CI_Model
 
     public function logout()
     {
+        getUserAgent("Logout ออกจากโปรแกรม","");
         session_destroy();
         $this->session->unset_userdata('referrer_url');
         header("refresh:0; url=" . base_url('login.html'));

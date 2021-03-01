@@ -570,11 +570,11 @@ function getImageUserPost($ecodepost)
 }
 
 
-function countHit($kbcode)
+function countHit($kbcode , $ecodepost)
 {
     $sql = gfn()->db->query("SELECT kb_hit FROM kb_main WHERE kb_no = '$kbcode' ");
 
-    if ($sql->num_rows() == 0) {
+    if ($sql->row()->kb_hit < 1) {
         $nextHit = 1;
     } else {
         foreach ($sql->result() as $rs) {
@@ -583,11 +583,36 @@ function countHit($kbcode)
         }
         $nextHit = $getHit;
     }
-    $hitar = array(
-        "kb_hit" => $nextHit
+
+    if($ecodepost != getUser()->ecode){
+        $hitar = array(
+            "kb_hit" => $nextHit
+        );
+        gfn()->db->where("kb_no", $kbcode);
+        gfn()->db->update("kb_main", $hitar);
+    }else{
+
+    }
+    
+}
+
+
+function getUserAgent($activity,$kbno)
+{
+    $useragent = "Browser:".gfn()->agent->browser().' '.gfn()->agent->version(). ' Platform:'.gfn()->agent->mobile().' '.gfn()->agent->platform().' IP:'.gfn()->input->ip_address();
+    $arUseragent = array(
+        "ua_activity" => $activity,
+        "ua_kbno" => $kbno,
+        "ua_name" => getUser()->Fname." ".getUser()->Lname,
+        "ua_ecode" => getUser()->ecode,
+        "ua_deptcode" => getUser()->DeptCode,
+        "ua_deptname" => getUser()->Dept,
+        "ua_datetime" => date("Y-m-d H:i:s"),
+        "ua_agent" => $useragent
     );
-    gfn()->db->where("kb_no", $kbcode);
-    gfn()->db->update("kb_main", $hitar);
+    if(gfn()->db->insert("kb_useractivity" , $arUseragent)){
+        return "ok";
+    }
 }
 
 

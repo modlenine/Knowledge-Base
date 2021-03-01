@@ -71,6 +71,7 @@ class Main_model extends CI_Model
             // Upload file Zone
 
             if ($this->db->insert("kb_main", $savedata)) {
+                getUserAgent("เพิ่มรายการใหม่",$getformno);
                 return true;
             } else {
                 return false;
@@ -141,6 +142,7 @@ class Main_model extends CI_Model
 
             $this->db->where("kb_no" , $kbcode);
             if ($this->db->update("kb_main", $editdata)) {
+                getUserAgent("แก้ไขรายการ $kbcode เรียบร้อยแล้ว",$kbcode);
                 return true;
             } else {
                 return false;

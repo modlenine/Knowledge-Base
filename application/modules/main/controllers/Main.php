@@ -63,7 +63,9 @@ class Main extends MX_Controller
             header("refresh:0; url=".base_url());
             exit;
         }
-        countHit($kbcode);
+
+        countHit($kbcode,getDataByKbcode($kbcode)->kb_ecodepost);
+        getUserAgent("ดูรายละเอียดรายการ $kbcode",$kbcode);
         $data = array(
             "title" => "หน้า View ข้อมูล",
             "kbcode" => $kbcode,
@@ -93,7 +95,9 @@ class Main extends MX_Controller
 
     public function viewdata_read($kbcode)
     {
-        countHit($kbcode);
+        $deptname = getDataByKbcode($kbcode)->kb_deptnamepost;
+        countHit($kbcode,getDataByKbcode($kbcode)->kb_ecodepost);
+        getUserAgent("ดูรายละเอียดของแผนก $deptname รายการ $kbcode",$kbcode);
         $data = array(
             "title" => "หน้า View ข้อมูล (Readonly)",
             "kbcode" => $kbcode,
@@ -420,6 +424,6 @@ class Main extends MX_Controller
 
     public function test()
     {
-        echo substr("image.jpg" , -4);
+        
     }
 }/* End of file Main.php */
